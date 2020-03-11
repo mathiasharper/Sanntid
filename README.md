@@ -1,2 +1,0 @@
-# Sanntid
-Heis
