@@ -91,17 +91,20 @@ func InitFsm(
 	elev.EState = ES_MOVING
 
 	for {
-        fmt.Println("kjorer")
+
 		//Send local elevator state to distributor
 		updateStateC <- elev
-		writeStateToFile(elev)
+		//writeStateToFile(elev)
+        fmt.Println("write")
 		select {
 
 		//New requests received from distributor
 		case newRequests := <-updateFSMRequestsC:
+            fmt.Println("newRequests")
 			//If there are unknown requests, add them to local state and generate a button event
 			tempRequests, isNew, buttonEvent := handleNewRequests(utils.CopySlice(elev.Requests), newRequests)
 			if isNew {
+                fmt.Println("isNew")
 				elev.Requests = tempRequests
 				switch elev.EState {
 				case ES_IDLE:
@@ -131,6 +134,7 @@ func InitFsm(
 			}
 
 		case floor := <-floorEventC:
+            fmt.Println("kjorer")
 			elev.Floor = floor
 			elevio.SetFloorIndicator(elev.Floor)
 
