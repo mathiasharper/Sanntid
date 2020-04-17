@@ -94,7 +94,7 @@ func InitFsm(
 
 		//Send local elevator state to distributor
 		updateStateC <- elev
-		//writeStateToFile(elev)
+		writeStateToFile(elev)
         fmt.Println("write")
 		select {
 
@@ -140,6 +140,7 @@ func InitFsm(
 
 			if elev.EState == ES_MOVING {
 				if ShouldStop(elev) {
+                    fmt.Println("shouldstop")
 					elevio.SetMotorDirection(MD_STOP)
 
 					if ShouldClearAtCurrentFloor(elev) {

@@ -84,7 +84,7 @@ func ReasignOrders(globalState GlobalElevator, localIP string) [][]bool {
 	jsonElevString = strings.Replace(jsonElevString, "dooropen", "doorOpen", -1)
 
 	//Run hall_request_assigner with the json elev string as input and get the STDOUT output
-	cmd := exec.Command("gnome-terminal", "-x", "bash", "-c", "./Sanntid/src/distributor/reasigner/hall_request_assigner", jsonElevString)
+	cmd := exec.Command("-x", "./hall_request_assigner", jsonElevString)
 	var output bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &output
