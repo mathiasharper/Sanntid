@@ -83,6 +83,7 @@ func ReasignOrders(globalState GlobalElevator, localIP string) [][]bool {
 
 	//Run hall_request_assigner with the json elev string as input and get the STDOUT output
 	cmd := exec.Command("./hall_request_assigner", "-i", jsonElevString)
+	//cmd := exec.Command("./hello.txt")
 	var output bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &output
