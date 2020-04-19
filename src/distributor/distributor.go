@@ -79,11 +79,11 @@ func hasNewCabOrders(old, new [][]bool) bool {
 
 func RunDistributor(
 	globalState GlobalElevator,
-	//updateBroadcastedPacketC chan<- GlobalElevator,
+	updateBroadcastedPacketC chan<- GlobalElevator,
 	StateUpdateEventC <-chan GlobalElevator,
-	//elevatorLostEventC <-chan string,
-	//watchdogTimeoutC <-chan bool,
-	//watchdogUpdateStateC chan<- GlobalElevator,
+	elevatorLostEventC <-chan string,
+	watchdogTimeoutC <-chan bool,
+	watchdogUpdateStateC chan<- GlobalElevator,
 	buttonOrderC <-chan ButtonEvent,
 	updateFSMRequestsC chan<- [][]bool,
 	numFloors, numButtons int,
@@ -149,7 +149,7 @@ func RunDistributor(
 			}
 
 		//Lost connection to an elevator on the network, remove it from global state and reasign orders
-		/*
+
 		case id := <-elevatorLostEventC:
 			log.Println("Distributor: Elevator Lost: " + id)
 			if _, ok := globalState.Elevators[id]; ok {
@@ -157,8 +157,8 @@ func RunDistributor(
 				newLocalRequests := reasigner.ReasignOrders(globalState, localID)
 				updateFSMRequestsC <- newLocalRequests
 			}
-			*/
-		/*
+
+
 		case <-watchdogTimeoutC:
 			log.Println("Distributor: Watchdog event, taking all orders")
 			tempReq := make([][]bool, numFloors)
@@ -169,7 +169,7 @@ func RunDistributor(
 				tempReq[floor][BTN_CAB] = globalState.IsCabOrder(localID, floor)
 			}
 			updateFSMRequestsC <- tempReq
-			*/
+
 		}
 	}
 }

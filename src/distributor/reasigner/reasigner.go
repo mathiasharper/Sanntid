@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+
 type elevStruct struct {
 	Behaviour   string
 	Floor       int
@@ -69,13 +70,10 @@ func ReasignOrders(globalState GlobalElevator, localIP string) [][]bool {
 	}
 
 	//Convert the struct to a JSON object
-
 	jsonElevBytes, err := json.Marshal(jElevStruct)
 	if err != nil {
 		log.Println(err)
 	}
-
-
 
 	//Format json elevator string to work with hall_request_assigner
 	jsonElevString := strings.ToLower(string(jsonElevBytes))
@@ -84,12 +82,13 @@ func ReasignOrders(globalState GlobalElevator, localIP string) [][]bool {
 	jsonElevString = strings.Replace(jsonElevString, "dooropen", "doorOpen", -1)
 
 	//Run hall_request_assigner with the json elev string as input and get the STDOUT output
-	cmd := exec.Command("-x", "./hall_request_assigner", jsonElevString)
+	cmd := exec.Command("./hall_request_assigner", "-i", jsonElevString)
 	var output bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &output
 	cmd.Stderr = &stderr
 	e := cmd.Run()
+	fmt.Println("nonono")
 	if e != nil {
 		log.Panic(fmt.Sprint(e) + ": " + stderr.String())
 	}

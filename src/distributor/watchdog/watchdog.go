@@ -1,7 +1,7 @@
 package watchdog
 
 import (
-	. "common/elevatortypes"
+	. "../../elevatortypes"
 	"time"
 )
 
